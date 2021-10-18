@@ -1,148 +1,199 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import Chart from 'chart.js/auto';
+
+// import App from './app/App';
 
 
-function Square(props) {
-  return (
-    <button className="square" onClick={props.onClick}>
-      {props.value}
-    </button>
-  );
+
+// Data generation
+function getRandomArray(numItems) {
+  // Create random array of objects
+  let names = ["Toyota", "BMV", "Tesla", "Ford", "Porsche", "Honda", "Audi", "Nissan", "Lexus", "Kia", "Volkswagen", "Volvo", "Peugeot"];
+  let data = [];
+  for(var i = 0; i < numItems; i++) {
+    data.push({
+      label: names[i],
+      value: Math.round(60 + 80 * Math.random())
+    });
+  }
+  return data;
 }
 
-class Board extends React.Component {
-  renderSquare(i) {
-    return (
-      <Square
-        value={this.props.squares[i]}
-        onClick={() => this.props.onClick(i)}
-      />
-    );
+function getRandomDateArray(numItems) {
+  // Create random array of objects (with date)
+  let data = [];
+  let baseTime = new Date('2018-05-01T00:00:00').getTime();
+  let dayMs = 24 * 60 * 60 * 1000;
+  for(var i = 0; i < numItems; i++) {
+    data.push({
+      time: new Date(baseTime + i * dayMs),
+      value: Math.round(20 + 80 * Math.random())
+    });
+  }
+  return data;
+}
+
+function getData() {
+  let data = [];
+
+  data.push({
+    title: 'Visits',
+    data: getRandomDateArray(450)
+  });
+
+  data.push({
+    title: 'Cars sold in Kyiv',
+    data: getRandomArray(10)
+  });
+
+  data.push({
+    title: 'Cars sold in Kyiv oblast',
+    data: getRandomArray(10)
+  });
+
+  data.push({
+    title: 'Data 4',
+    data: getRandomArray(4)
+  });
+
+  return data;
+}
+
+
+// BarChart
+class BarChart extends React.Component {
+  constructor(props) {
+    super(props);
+    this.canvasRef = React.createRef();
+  }
+
+  componentDidUpdate() {
+    this.myChart.data.labels = this.props.data.map(d => d.label);
+    this.myChart.data.datasets[0].data = this.props.data.map(d => d.value);
+    this.myChart.update();
+  }
+
+  componentDidMount() {
+    this.myChart = new Chart(this.canvasRef.current, {
+      type: 'bar',
+      options: {
+	      maintainAspectRatio: false,
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                min: 30,
+                max: 200
+              }
+            }
+          ]
+        }
+      },
+      data: {
+        labels: this.props.data.map(d => d.label),
+        datasets: [{
+          label: this.props.title,
+          data: this.props.data.map(d => d.value),
+          backgroundColor: this.props.color
+        }]
+      }
+    });
   }
 
   render() {
     return (
-      <div>
-        <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
-        </div>
-      </div>
+        <canvas ref={this.canvasRef} />
     );
   }
 }
 
-class Game extends React.Component {
+class DoughnutChart extends React.Component {
   constructor(props) {
     super(props);
+    this.canvasRef = React.createRef();
+  }
+
+  componentDidUpdate() {
+    this.myChart.data.labels = this.props.data.map(d => d.label);
+    this.myChart.data.datasets[0].data = this.props.data.map(d => d.value);
+    this.myChart.update();
+  }
+
+  componentDidMount() {
+    this.myChart = new Chart(this.canvasRef.current, {
+      type: 'doughnut',
+      options: {
+	      maintainAspectRatio: false
+      },
+      data: {
+        labels: this.props.data.map(d => d.label),
+        datasets: [{
+          data: this.props.data.map(d => d.value),
+          backgroundColor: this.props.colors
+        }]
+      }
+    });
+
+  }
+
+
+  render() {
+    return <canvas ref={this.canvasRef} />;
+  }
+}
+
+
+// App
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+
     this.state = {
-      history: [{
-        squares: Array(9).fill(null)
-      }],
-      stepNumber: 0,
-      xIsNext: true,
+      data: getData()
     };
   }
 
-  handleClick(i) {
-    const history = this.state.history.slice(0, this.state.stepNumber + 1);
-    const current = history[history.length - 1];
-    const squares = current.squares.slice();
-    if (calculateWinner(squares) || squares[i]) {
-      return;
-    }
-    squares[i] = this.state.xIsNext ? 'X' : 'O';
-    this.setState({
-      history: history.concat([{
-        squares: squares
-      }]),
-      stepNumber: history.length,
-      xIsNext: !this.state.xIsNext,
-    });
+  componentDidMount() {
+    window.setInterval(() => {
+      this.setState({
+        data: getData()
+      })
+    }, 5000)
   }
 
-  jumpTo(step){
-    this.setState({
-      stepNumber: step,
-      xIsNext: (step % 2) === 0,
-    });
-  }
-  
   render() {
-    const history = this.state.history;
-    const current = history[this.state.stepNumber];
-    const winner = calculateWinner(current.squares);
-
-    const moves = history.map((step, move)=>{
-      const desc = move ?
-      'Go to move #' + move:
-      'Go to game start';
-      return(
-        <li key={move}>
-          <button onClick={()=> this.jumpTo(move)}>{desc}</button>
-        </li>
-      );
-    });
-
-    let status;
-    if (winner) {
-      status = 'Winner: ' + winner;
-    } else {
-      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
-    }
-
     return (
-      <div className="game">
-        <div className="game-board">
-          <Board
-            squares={current.squares}
-            onClick={(i) => this.handleClick(i)}
+      <div className="App">
+        
+        <div className="sub chart-wrapper">
+          <BarChart
+            data={this.state.data[1].data}
+            title={this.state.data[1].title}
+            color="#70CAD1"
           />
         </div>
-        <div className="game-info">
-          <div>{status}</div>
-          <ol>{moves}</ol>
+        <div className="sub chart-wrapper">
+          <BarChart
+            data={this.state.data[2].data}
+            title={this.state.data[2].title}
+            color="#ac3838"
+          />
+        </div>
+        <div className="sub chart-wrapper">
+          <DoughnutChart
+            data={this.state.data[3].data}
+            title={this.state.data[3].title}
+            colors={['#a8e0ff', '#8ee3f5', '#70cad1', '#3e517a', '#b08ea2', '#BBB6DF']}
+          />
         </div>
       </div>
     );
   }
 }
 
-
-
 ReactDOM.render(
-  <Game />,
-  document.getElementById('root')
-);
-
-function calculateWinner(squares) {
-  const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
-    }
-  }
-  return null;
-}
+  <App/>,
+  document.getElementById("root")
+)
