@@ -1,11 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './app/app';
+
+import './app/styles.css';
+// import Chart from 'chart.js/auto';
+// import App from './app/App';
+import MyComponent from './app/App';
+
+
 
 
 ReactDOM.render(
-    <App />,
-  document.getElementById('root')
-);
-
+  <MyComponent/>,
+  document.getElementById("root")
+)
