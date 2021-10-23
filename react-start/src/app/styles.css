@@ -47,6 +47,34 @@ code {
   margin-left: 10%;
 }
 
+.titleContainer{
+  font-size: 16px;
+ background-color: #F3F6F9;
+ border-radius: 6px;
+  display: flex;
+  flex-direction:row;
+  /* justify-content: center; */
+  /* align-content: center; */
+  height: 50px;
+  width: 80%;
+  margin-left: 10%;
+}
+
+.mainContainer{
+
+  font-size: 22px;
+  border-radius: 6px;
+   display: flex;
+   flex-direction:row;
+   height: 150px;
+   width: 80%;
+   margin-left: 10%;
+}
+
+#mainContainer{
+  margin-right: 65%;
+}
+
 .typeContainer{
   display: flex;
   flex-direction:column;
@@ -87,6 +115,24 @@ li{
   color: rgba(27, 197, 189, 1);
   border: none;
   background-color: #C9F7F5;
+  border-radius: 6px;;
+}
+
+.reportBtn{
+  padding: 15px;
+  width: 150px;
+  color: white;
+  border: none;
+  background-color: #3699FF;
+  border-radius: 6px;
+  margin-right: 15%;
+}
+
+.createBtn{
+  padding: 15px;
+  color: white;
+  border: none;
+  background-color: #F64E60;
   border-radius: 6px;;
 }
 

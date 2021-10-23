@@ -19,8 +19,8 @@ class MyComponent extends React.Component {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ title: 'React POST Request Example' })
-  };
-  
+    };
+
     fetch("https://615c91e3c29813001773625b.mockapi.io/exhibits")
       .then(res => res.json())
       .then(
@@ -54,7 +54,37 @@ class MyComponent extends React.Component {
     } else {
       return (
         <div className="wrapper">
-          
+          <div className="mainContainer">
+            <div className="typeContainer" id="mainContainer">
+              <p className="mainText">New Arrivals</p>
+              <p>More than 400+ new members</p>
+            </div>
+            <div className="buttonContainer">
+              <button className="reportBtn">New Report</button>
+            </div>
+            <div className="buttonContainer">
+              <button className="createBtn">Create</button>
+            </div>
+
+          </div>
+          <div className="titleContainer">
+            <div className="typeContainer">
+              <p className="mainText">Products</p>
+            </div>
+            <div className="typeContainer">
+              <p>Earnings</p>
+            </div>
+            <div className="typeContainer">
+              <p>Comission</p>
+            </div>
+            <div className="jobContainer">
+              <p>Company</p>
+            </div>
+            <div className="typeContainer">
+              <p>Rating</p>
+            </div>
+          </div>
+          <div className="tytleContainer">
             {items.map(item => (
               <div className="container">
                 <li key={item.id}>
@@ -86,7 +116,9 @@ class MyComponent extends React.Component {
               </div>
 
 
+
             ))}
+          </div>
         </div>
 
       );
