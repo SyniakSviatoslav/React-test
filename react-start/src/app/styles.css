@@ -14,83 +14,37 @@ code {
     monospace;
 }
 
-/* #root{
-  background-color: rgb(238, 234, 234);
-} */
-
 .wrapper{
   background-color: white;
+  padding: 2%;
   height: 100%;
-  width: 100%;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   margin-top: 10%;
-  /* justify-content: center; */
   align-content: center;
   border-radius: 50px;
   background: #fafafa;
-  box-shadow:  20px 20px 60px #d5d5d5,
-               -20px -20px 60px #ffffff;
+  box-shadow:  20px 20px 60px #d5d5d5, -20px -20px 60px #ffffff;
+  margin: auto;
+  margin-top: 2%;
   
 }
 
-.container{
- 
-  font-size: 16px;
- 
-  display: flex;
-  flex-direction:row;
-  /* justify-content: center; */
-  /* align-content: center; */
-  height: 100px;
-  width: 80%;
-  margin-left: 10%;
-}
-
-.titleContainer{
-  font-size: 16px;
- background-color: #F3F6F9;
- border-radius: 6px;
-  display: flex;
-  flex-direction:row;
-  /* justify-content: center; */
-  /* align-content: center; */
-  height: 50px;
-  width: 80%;
-  margin-left: 10%;
-}
 
 .mainContainer{
-
   font-size: 22px;
   border-radius: 6px;
-   display: flex;
-   flex-direction:row;
-   height: 150px;
-   width: 80%;
-   margin-left: 10%;
+  display: flex;
+  flex-direction:row;
+  height: 150px;
+  width: 100%;
 }
 
 #mainContainer{
   margin-right: 65%;
 }
 
-.typeContainer{
-  display: flex;
-  flex-direction:column;
-  width: 200px;
-  /* justify-content: center; */
-  /* align-items: center; */
-  margin-right: 10px;
-  height: 100%;
-}
-
-.jobContainer{
-  display: flex;
-  flex-direction:column;
-  width: 250px;
-  margin-right: 20px;
-}
 
 p{
   color: grey;
@@ -101,9 +55,7 @@ p{
   font-weight: bolder;
 }
 
-li{
-  list-style: none;
-}
+
 .buttonContainer{
   display: flex;
   justify-content: center;
@@ -136,14 +88,31 @@ li{
   border-radius: 6px;;
 }
 
-productsContainer{
-  font-size: 16px;
- 
-  display: flex;
-  flex-direction:row;
-  /* justify-content: center; */
-  /* align-content: center; */
-  height: 100px;
-  width: 80%;
-  margin-left: 10%;
+
+
+table{
+  border-collapse: collapse;
+  width: 100%;
+  background-color: transparent;
+}
+#table-header{
+  background-color: #E5E5E5;
+  height: 43px;
+  color:#B5B5C3;
+  font-size: 12px;
+  text-align: left;
+}
+th:first-child{
+  color: #464E5F;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  padding-left:20px
+}
+th:last-child{
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+th{
+  padding-left: 5px;
 }

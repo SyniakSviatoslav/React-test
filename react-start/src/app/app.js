@@ -45,7 +45,7 @@ class MyComponent extends React.Component {
   }
 
   render() {
-    console.log(this.state)
+    let tbodyData = this.state.items;
     const { error, isLoaded, items } = this.state;
     if (error) {
       return <div>Error: {error.message}</div>;
@@ -67,99 +67,53 @@ class MyComponent extends React.Component {
             </div>
 
           </div>
-          <div className="titleContainer">
-            <div className="typeContainer">
-              <p className="mainText">Products</p>
-            </div>
-            <div className="typeContainer">
-              <p>Earnings</p>
-            </div>
-            <div className="typeContainer">
-              <p>Comission</p>
-            </div>
-            <div className="jobContainer">
-              <p>Company</p>
-            </div>
-            <div className="typeContainer">
-              <p>Rating</p>
-            </div>
-          </div>
-          <div className="tytleContainer">
-            {items.map(item => (
-              <div className="container">
-                <li key={item.id}>
-                </li>
-                <div className="typeContainer">
-                  <p className="mainText">{item.name} {item.lastName}</p>
+
+          <table>
+            <tr id="table-header">
+              <th>PRODUCTS</th>
+              <th>EARNINGS</th>
+              <th>COMISSION</th>
+              <th>COMPANY</th>
+              <th>RATING</th>
+              <th></th>
+            </tr>
+            {this.state.items.map(item =>
+              <tr key={item.id}>
+                
+                <td className="about-member">
+                  <h3>{item.name}{item.lastName}</h3>
                   <p>{item.nameDescr}</p>
-                </div>
-                <div className="typeContainer">
-                  <p className="mainText">{item.earnings}$</p>
+                </td>
+                <td className="earnings">
+                  <h3>{item.earnings + "$"}</h3>
                   <p>{item.paid}</p>
-                </div>
-                <div className="typeContainer">
-                  <p className="mainText">{item.comission}$</p>
+                </td>
+                <td className="comission">
+                  <h3>{item.comission + "$"}</h3>
                   <p>{item.paid}</p>
-                </div>
-                <div className="jobContainer">
-                  <p className="mainText">{item.company}</p>
+                </td>
+                <td className="company">
+                  <h3>{item.company}</h3>
                   <p>{item.job}</p>
-                </div>
-                <div className="typeContainer">
-                  <p className="mainText">{item.rating}</p>
-                  <p>{item.ratingDesc}</p>
-                </div>
-                <div className="buttonContainer">
-                  <button className="offerBtn">View Offer</button>
-                </div>
+                </td>
+                <td className="rating">
+                  <h3>{item.rating }</h3>
+                  <p>{item.ratingDescr}</p>
+                </td>
+                <td>
+                <button className="offerBtn">View Offer</button>
+                </td>
+              </tr>
+            )}
+          </table>
 
-              </div>
-
-
-
-            ))}
-          </div>
         </div>
-
       );
     }
 
   }
 }
 
+
 export default MyComponent;
-
-
-
-// class App extends React.Component {
-//     constructor(props) {
-//       super(props);
-//       this.state = {
-//         count: 0
-//       }
-//     }
-
-//     increase = () => {
-//       this.setState({ count: this.state.count + this.props.step })
-//     }
-//     decrease = () => {
-//       this.setState({ count: this.state.count - this.props.step })
-//     }
-//     render() {
-//       const { count } = this.state;
-//       console.log(this.props)
-//       return (
-//         <>
-//           <div className="wrapper">
-//             <input placeholder="How much add or decrease" type="number" id="input"></input>
-//             <button className="maxButton" type="button" onClick={this.increase}>+</button>
-//             <p>{count}</p>
-//             <button className="minButton" type="button" onClick={this.decrease}>-</button>
-//           </div>
-//         </>
-//       )
-//     }
-//   }
-
-//   export default App;
 
